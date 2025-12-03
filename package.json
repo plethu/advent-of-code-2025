@@ -1,0 +1,13 @@
+{
+  "name": "advent-of-code-2025",
+  "type": "module",
+  "scripts": {
+    "day": "bun src/days/$DAY/index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "dependencies": {
+    "picocolors": "^1.1.1"
+  }
+}
