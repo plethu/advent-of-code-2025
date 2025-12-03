@@ -22,53 +22,16 @@ export const day = (importMetaPath: string) => {
   const dayDir = dirname(importMetaPath);
   const dayNum = dayDir.split('/').pop() ?? '';
 
-  const readInput = (filename = 'input.txt'): Promise<string> =>
+  const readInput = (filename = 'input.txt') =>
     Bun.file(join(dayDir, filename)).text();
 
-  const readLines = async (filename?: string): Promise<string[]> =>
-    (await readInput(filename)).trim().split('\n');
+  const readLines = (input: string) =>
+    input.trim().split('\n');
 
-  const readNumbers = async (filename?: string): Promise<number[]> =>
-    (await readLines(filename)).map(Number);
+  const readNumbers = (input: string) =>
+    readLines(input).map(Number);
 
-  const test = (label: string, actual: Result, expected: Result): boolean => {
-    const passed = JSON.stringify(actual) === JSON.stringify(expected);
-    const icon = passed ? pc.green('PASS') : pc.red('FAIL');
-
-    const comparison = passed
-      ? pc.dim(`${actual} == ${expected}`)
-      : `${pc.yellow(String(actual))} != ${pc.cyan(String(expected))}`;
-
-    console.log(`\t${icon}  ${label}`);
-    console.log(`\t\t${comparison}`);
-
-    if (!passed) { 
-        process.exitCode = 1; 
-    }
-
-    return passed;
-  };
-
-  const runTests = async ({ part1, part2 }: Solution, cases: TestCase[]): Promise<void> => {
-    console.log(pc.bold(`\nTests: Day ${dayNum}`));
-    console.log(DIVIDER);
-
-    for (const { file, part1: expected1, part2: expected2 } of cases) {
-      const input = await readInput(file);
-      const suffix = pc.dim(`(${file})`);
-
-      for (const [part, solver, expected] of [
-        ['Part 1', part1, expected1],
-        ['Part 2', part2, expected2],
-      ] as const) {
-        if (expected !== undefined) {
-          test(`\t${part} ${suffix}\n`, await solver(input), expected);
-        }
-      }
-    }
-  };
-
-  const getInput = async (): Promise<string> => {
+  const getInput = async () => {
     const arg = Bun.argv[2];
 
     if (!arg) {
@@ -86,7 +49,7 @@ export const day = (importMetaPath: string) => {
     }
   };
 
-  const run = async ({ part1, part2 }: Solution): Promise<void> => {
+  const run = async ({ part1, part2 }: Solution) => {
     const input = await getInput();
 
     console.log(pc.bold(`\nDay ${dayNum}`));
@@ -101,7 +64,5 @@ export const day = (importMetaPath: string) => {
     readLines,
     readNumbers,
     run,
-    runTests,
-    test,
   };
 };

@@ -2,7 +2,9 @@
   "name": "advent-of-code-2025",
   "type": "module",
   "scripts": {
-    "day": "bun src/days/$DAY/index.ts"
+    "day": "bun src/days/$DAY/index.ts",
+    "test": "bun test src/days/$DAY/",
+    "iterate": "bun test src/days/$DAY/ --watch --only-failures"
   },
   "devDependencies": {
     "@types/bun": "latest"
