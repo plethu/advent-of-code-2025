@@ -24,8 +24,8 @@ describe("day 1", () => {
     });
   });
 
-  describe('timesWrapped', () => {
-  });
+  // adequately tested by part 2
+  describe.skip('timesWrapped', () => {});
 
   describe('part 1', () => {
     it.each([
@@ -105,6 +105,11 @@ describe("day 1", () => {
     ])('will count each time it wraps from a rotation in either direction with $input', async ({input, expected}) => {
       const result = await part2(input);
       expect(result).toBe(expected);
+    });
+
+    it('will solve for the input', async () => {
+      const result = await part2(await readInput());
+      expect(result).toEqual(6932);
     });
   });
 });
